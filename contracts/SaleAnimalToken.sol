@@ -20,7 +20,7 @@ contract SaleAnimalToken {
 
     //판매 등록하는 함수; 무엇을 팔지와 가격을 인수로 받음
     function setForSaleAnimalToken(uint256 _animalTokenID, uint256 _price) public {
-        //주인에 해당하는 사람이 맞는지 알아보기 위해 주소를 불러옴
+        //주인에 해당하는 사람이 맞는지 알아보기 위해 민팅 주소를 불러옴
         address animalTokenOwner = mintAnimalTokenAddress.ownerOf(_animalTokenID);
         
         //판매 전 조건 확인 
@@ -37,4 +37,41 @@ contract SaleAnimalToken {
         //판매 중인 토큰 배열에 추가
         onSaleAnimalTokenArray.push(_animalTokenID);
     }
+
+    //구매 함수; payable을 추가하여 폴리곤 네트워크 함수 사용 가능
+    function purchaseAnimalToken(uint256 _animalTokenID) public payable {
+        //위의 가격 배열에서 토큰 가격을 가져옴
+        uint256 price = animalTokenPrices[_animalTokenID];
+        address animalTokenOwner = mintAnimalTokenAddress.ownerOf(_animalTokenID);
+
+        require(price > 0, "This animal token is not yet sale.");
+        //토큰의 주인이 구매자와 달라야 구매 가능
+        require(animalTokenOwner != msg.sender, "Caller is animal token owner.");
+        //만약 토큰 가격보다 매틱(돈)을 적게 보냈을 때 애러 띄우기; msg.value는 보내는 매틱(돈)의 양
+        require(price <= msg.value, "Caller sent lower than the price.");
+
+        //거래 코드
+        //msg.sender가 보내는 매틱의 양 msg.value를 토큰 주인한테 보내는 코드
+        payable(animalTokenOwner).transfer(msg.value);
+        //토큰을 돈을 보낸 msg.sender에게 보내는 코드
+        mintAnimalTokenAddress.safeTransferFrom(animalTokenOwner, msg.sender, _animalTokenID);
+        
+        //거래 후 변경하는 코드
+        //거래가 성사된 토큰 가격 초기화 
+        animalTokenPrices[_animalTokenID] = 0;
+        //거래가 성사된 토큰을 판매 중인 배열에서 제거
+        for(uint256 i = 0; i < onSaleAnimalTokenArray.length; i++) {
+            if(animalTokenPrices[onSaleAnimalTokenArray[i]] == 0) {
+                onSaleAnimalTokenArray[i] = onSaleAnimalTokenArray[onSaleAnimalTokenArray.length - 1];
+                onSaleAnimalTokenArray.pop();
+            }
+        }
+    }
+
+    //프론트에서 사용할 배열 길이 return 함수; 보기전용은 view, 리턴 타입은 uint256
+    function getOnSaleAnimalTokenArrayLength() view public returns (uint256) {
+        return onSaleAnimalTokenArray.length;
+
+    }
 }
+
