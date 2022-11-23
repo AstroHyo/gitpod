@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Main from "./routes/main";
+import { mintAnimalTokenContract } from "./web3Config";
 
 const App: FC = () => {
   //MetaMask 계정 가져와서 연결하기
@@ -27,15 +28,10 @@ const App: FC = () => {
     getAccount();
   }, []);
 
-  //잘 연결됐는지 확인
-  useEffect(() => {
-    console.log(account);
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main account={account} />} />
       </Routes>
     </BrowserRouter>
   );
