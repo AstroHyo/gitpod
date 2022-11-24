@@ -1,14 +1,12 @@
-import React, { FC } from "react";
-import { Image } from "@chakra-ui/react";
+import React, { FC } from 'react'
+import { Image } from '@chakra-ui/react'
 
 interface AnimalCardProps {
-    animalType: string;
+  animalType: string
 }
 
 const AnimalCard: FC<AnimalCardProps> = ({ animalType }) => {
-    return (
-        <Image w={150} h={150} src={'images/${animalType}.png'} alt="AnimalCard" />
-    );
-};
+  return <Image w={150} h={150} borderRadius={10} src={`images/${animalType}.png`} alt="Animal Card" />
+}
 
-export default AnimalCard;
+export default AnimalCard

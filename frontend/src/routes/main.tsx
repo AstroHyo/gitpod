@@ -49,7 +49,6 @@ const Main: FC<MainProps> = ({ account }) => {
     return (
         <Flex w="full" h="100vh" justifyContent="center" alignItems="center" direction="column">
             <Box>
-                {/*animalcard가 있으면 보여주고 없으면 mint하라고 텍스트*/}
                 {newAnimalType ? (
                     <AnimalCard animalType={newAnimalType} />
                 ) : (

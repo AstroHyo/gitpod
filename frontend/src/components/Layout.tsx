@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import { Stack, Flex, Box, Text, Link, Button } from "@chakra-ui/react";
+import { Stack, Flex, Box, Text, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const Layout: FC = ({ children }) => {
     return (
@@ -14,7 +15,7 @@ const Layout: FC = ({ children }) => {
                 <Link to="my-animal">
                     <Button size="sm" colorScheme="red">My Animal</Button>
                 </Link>
-            </Flex>
+            </Flex> 
             <Flex direction="column" h="full" justifyContent="center" alignItems="center">
                 {children}
             </Flex>
