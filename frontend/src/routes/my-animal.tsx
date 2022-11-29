@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Flex, Text, Button, Grid } from "@chakra-ui/react";
-import { mintAnimalTokenContract, saleAnimalTokenAddress } from "../web3Config";
-import AnimalCard from "../components/AnimalCard";
+import { mintAnimalTokenContract, saleAnimalTokenAddress, saleAnimalTokenContract } from "../web3Config";
+import MyAnimalCard, { IMyAnimalCard } from "../components/MyAnimalCard";
 
 interface MyAnimalProps {
     account: string;
@@ -9,7 +9,7 @@ interface MyAnimalProps {
 
 const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
     //내 animal card를 저장할 배열
-    const [animalCardArray, setAnimalCardArray] = useState<string[]>();
+    const [animalCardArray, setAnimalCardArray] = useState<IMyAnimalCard[]>();
     //판매 권한 상태를 받아올 수 있는 변수
     const [saleStatus, setSaleStatus] = useState<boolean>(false);
 
@@ -32,8 +32,12 @@ const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
                 const animalType = await mintAnimalTokenContract.methods
                     .animalTypes(animalTokenId)
                     .call();  
+
+                const animalPrice = await saleAnimalTokenContract.methods
+                    .animalTokenPrices(animalTokenId)
+                    .call();
                 
-                tempAnimalCardArray.push(animalType);
+                tempAnimalCardArray.push({animalTokenId, animalType, animalPrice});
             }
 
             //animalTypeArray 넣기
@@ -100,9 +104,18 @@ const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
                 {saleStatus ? "Cancel" : "Approve"}
             </Button>
         </Flex>
-        <Grid templateColumns="repeat(4, 1fr)" gap={8} mt={4}>
+        <Grid templateColumns="repeat(5, 1fr)" gap={8} mt={4}>
             {animalCardArray && animalCardArray.map((v, i) => {
-                    return <AnimalCard key={i} animalType={v}/>
+                    return (
+                        <MyAnimalCard 
+                            key={i} 
+                            animalTokenId={v.animalTokenId}
+                            animalType={v.animalType}
+                            animalPrice={v.animalPrice}
+                            saleStatus={saleStatus}
+                            account={account}
+                        />
+                    );
                 })
             }
         </Grid>
