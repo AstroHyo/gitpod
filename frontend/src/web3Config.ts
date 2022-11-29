@@ -532,18 +532,18 @@ const saleAnimalTokenAbi: AbiItem[] = [
 ];
 
 //주소 가져오기
-const mintAnimalTokenAddress = "0xcB143c79Cd593d18dD9E5275232b875Ad5D47d28";
-const saleAnimalTokenAddress = "0xC30e20525e3Ff1A493274deFD7E872c6D19CF165";
+export const mintAnimalTokenAddress = '0xcB143c79Cd593d18dD9E5275232b875Ad5D47d28'
+export const saleAnimalTokenAddress = '0xC30e20525e3Ff1A493274deFD7E872c6D19CF165'
 
 //web3를 이용하여 contract 가져오기
-export const web3 = new Web3(window.ethereum);
+export const web3 = new Web3(window.ethereum)
 
 export const mintAnimalTokenContract = new web3.eth.Contract(
 	mintAnimalTokenAbi,
 	mintAnimalTokenAddress
-);
+)
 
 export const saleAnimalTokenContract = new web3.eth.Contract(
 	saleAnimalTokenAbi,
 	saleAnimalTokenAddress
-);
+)

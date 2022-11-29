@@ -3,7 +3,6 @@ import { Grid } from "@chakra-ui/react";
 import { mintAnimalTokenContract } from "../web3Config";
 import AnimalCard from "../components/AnimalCard";
 
-
 interface MyAnimalProps {
     account: string;
 }
@@ -22,7 +21,7 @@ const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
             //for문을 이용하여 보유한 각 카드의 animal type 구하기
             const tempAnimalCardArray = [];
 
-            for(let i=0; i=parseInt(balanceLength); i++) {
+            for(let i=0; i < parseInt(balanceLength); i++) {
                 const animalTokenId = await mintAnimalTokenContract.methods
                     .tokenOfOwnerByIndex(account, i)
                     .call();
@@ -30,8 +29,7 @@ const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
                 const animalType = await mintAnimalTokenContract.methods
                     .animalTypes(animalTokenId)
                     .call();  
-                console.log("완료1");
-
+                
                 tempAnimalCardArray.push(animalType);
             }
 
@@ -49,6 +47,7 @@ const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
         getAnimalTokens();
     }, [account]);
 
+    
     useEffect(() => {
         console.log(animalCardArray);
     }, [animalCardArray]);
