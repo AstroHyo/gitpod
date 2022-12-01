@@ -21,24 +21,25 @@ const MyAnimal: FC<MyAnimalProps> = ({ account }) => {
                 .balanceOf(account)
                 .call();
 
+            //토큰이 없으면 실행하지 마라.
+            if(balanceLength === "0") return;
+
             //for문을 이용하여 보유한 각 카드의 animal type 구하기
-            const tempAnimalCardArray = [];
+            const tempAnimalCardArray: IMyAnimalCard[] = [];
 
-            for(let i=0; i < parseInt(balanceLength); i++) {
-                const animalTokenId = await mintAnimalTokenContract.methods
-                    .tokenOfOwnerByIndex(account, i)
-                    .call();
-
-                const animalType = await mintAnimalTokenContract.methods
-                    .animalTypes(animalTokenId)
-                    .call();  
-
-                const animalPrice = await saleAnimalTokenContract.methods
-                    .animalTokenPrices(animalTokenId)
-                    .call();
-                
-                tempAnimalCardArray.push({animalTokenId, animalType, animalPrice});
-            }
+            //내가 가진 token 정보를 배열로 불러오는 getAnimalTokens 실행
+            const response = await mintAnimalTokenContract.methods
+                .getAnimalTokens(account)
+                .call();
+            
+            //map 함수를 이용하여 배열에 저장
+            response.map((v: IMyAnimalCard) => {
+                tempAnimalCardArray.push({
+                    animalTokenId: v.animalTokenId, 
+                    animalType: v.animalType, 
+                    animalPrice: v.animalPrice,
+                });
+            });
 
             //animalTypeArray 넣기
             setAnimalCardArray(tempAnimalCardArray);
