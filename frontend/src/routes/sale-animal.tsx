@@ -24,14 +24,14 @@ const SaleAnimal: FC<SaleAnimalProps> = ({ account }) => {
             //판매 토큰 정보 가져와 배열에 넣기
             for(let i = 0; i < parseInt(onSaleAnimalTokenArrayLength); i++) {
                 const animalTokenId = await saleAnimalTokenContract.methods
-                    .onSaleAnimalTokenArary(i)
+                    .onSaleAnimalTokenArray(i)
                     .call();
                 
                 const animalType = await mintAnimalTokenContract.methods
                     .animalTypes(animalTokenId)
                     .call(); 
                 
-                const animalPrice = await mintAnimalTokenContract.methods
+                const animalPrice = await saleAnimalTokenContract.methods
                     .animalTokenPrices(animalTokenId)
                     .call();              
                     
