@@ -26,7 +26,8 @@ const MyAnimalCard: FC<MyAnimalCardProps> = ({ animalTokenId, animalType, animal
 
   const onClickSell = async () => {
     try {
-      if(!account || !saleStatus) return;
+      if(!account) return window.alert("계정 연결 필요");
+      if(!saleStatus) return window.alert("판매 권한 승인이 필요합니다.");
       //가격을 보내는 인자: web3.utils.toWei
       const response = await saleAnimalTokenContract.methods
         .setForSaleAnimalToken(
