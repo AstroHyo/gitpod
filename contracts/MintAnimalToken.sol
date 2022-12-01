@@ -42,15 +42,15 @@ contract MintAnimalToken is ERC721Enumerable {
         //토큰이 있는지 체크, 없으면 error message 띄우기
         require(balanceLength != 0, "Owner doesn't have tokens.");
 
-        AnimalTokenData[] memory AnimalTokenData = new AnimalTokenData[](balanceLength);
+        AnimalTokenData[] memory animalTokenData = new AnimalTokenData[](balanceLength);
 
         //만든 배열에 각 토큰의 정보 넣기 
-        for(uint256 i = 0; i < balanceLength, i++) {
+        for(uint256 i = 0; i < balanceLength; i++) {
             uint256 animalTokenId = tokenOfOwnerByIndex(_animalTokenOwner, i);
             uint256 animalType = animalTypes[animalTokenId]; //mapping이라 대괄호 
             uint256 animalPrice = saleAnimalToken.getAnimalTokenPrice(animalTokenId);
 
-            AnimalTokenData[i] = AnimalTokenData(animalTokenId, animalType, animalPrice);
+            animalTokenData[i] = AnimalTokenData(animalTokenId, animalType, animalPrice);
         }
 
         return animalTokenData;
