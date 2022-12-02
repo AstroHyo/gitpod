@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { Grid, Flex, Box, Text, Button } from "@chakra-ui/react";
 import { IMyAnimalCard } from "../components/MyAnimalCard";
 import { mintAnimalTokenContract, saleAnimalTokenContract } from "../web3Config";
+import SaleAnimalCard from "../components/SaleAnimalCard";
 
 
 interface SaleAnimalProps {
@@ -9,7 +10,7 @@ interface SaleAnimalProps {
 }
 
 const SaleAnimal: FC<SaleAnimalProps> = ({ account }) => {
-    const [saleAnimalCard, setSaleAnimalCard] = useState<IMyAnimalCard[]>();
+    const [saleAnimalCardArray, setsaleAnimalCardArray] = useState<IMyAnimalCard[]>();
 
     //현재 판매 상태인 토큰을 가져오는 함수
     const getOnSaleAnimalTokens = async () => {
@@ -38,7 +39,7 @@ const SaleAnimal: FC<SaleAnimalProps> = ({ account }) => {
                 tempOnSaleArray.push({animalTokenId, animalType, animalPrice})
             }
 
-            setSaleAnimalCard(tempOnSaleArray);
+            setsaleAnimalCardArray(tempOnSaleArray);
         } catch (error) {
             console.error(error);
         }
@@ -48,7 +49,11 @@ const SaleAnimal: FC<SaleAnimalProps> = ({ account }) => {
         getOnSaleAnimalTokens();
     }, []);
 
-    return <Grid mt={4} templateColumns="repeat(4, 1fr)" gap={8}></Grid>;
+    return <Grid mt={4} templateColumns="repeat(4, 1fr)" gap={8}>
+        {saleAnimalCardArray && saleAnimalCardArray.map((v, i) => {
+            return <SaleAnimalCard key={i} animalType={v.animalType} animalPrice={v.animalPrice}  />;
+        })}
+    </Grid>;
 };
 
 export default SaleAnimal;

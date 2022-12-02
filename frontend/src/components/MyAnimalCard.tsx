@@ -3,6 +3,8 @@ import { Box, Button, Text, InputGroup, Input, InputRightAddon } from '@chakra-u
 import AnimalCard from "./AnimalCard";
 import { saleAnimalTokenAddress, saleAnimalTokenContract, web3 } from '../web3Config';
 
+//각 카드 아래에 있는 버튼이나 가격이나 그런 카드 하나의 틀을 만들어주는 파일
+
 //내가 가진 animal card의 정보
 export interface IMyAnimalCard {
   animalTokenId: string;
