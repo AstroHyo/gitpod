@@ -1,12 +1,12 @@
 # Animal NFT Market Demo
 <br>
+<center><h3>프로젝트를 위한 Animal NFT Market Demo 페이지 </h3></center>
+
 <div align="center">
     <img src="run.png" alt="실행화면" width="800" height="400">
 </div>
-
-<center><h3>프로젝트를 위한 Animal NFT Market Demo 페이지 </h3></center>
-
 </p>
+
 <p align="center">
 	<a href="https://github.com/AstroHyo/animalNFTmarket/search?l=Python&type=code"><img alt="GitHub language count" src="https://img.shields.io/github/languages/count/AstroHyo/animalNFTmarket"></a>
 	<a href="https://github.com/AstroHyo/animalNFTmarket/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/AstroHyo/animalNFTmarket"></a>
