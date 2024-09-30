@@ -1,5 +1,5 @@
 # 🦊Animal NFT Market Demo
-<center><h3>프로젝트를 위한 Animal NFT Market Demo 페이지 </h3></center>
+<center><h3>Animal NFT Market Demo </h3></center>
 
 <div align="center">
     <img src="run.png" alt="실행화면" width="800" height="400">
